@@ -19,6 +19,11 @@ class TableViewController: UITableViewController {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "testCell")
     }
 
+    @objc func tapBackButton(sender: UIBarButtonItem) {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc func tapReadyButton(sender: UIBarButtonItem) {
         
         self.navigationController?.popViewController(animated: true)
@@ -57,11 +62,29 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "testCell", for: indexPath) as! TableViewCell
         
-
         cell.delegate = self
         cell.index = indexPath
+        
+        switch indexPath.section {
+        case 0:
+            cell.title = Constants().userTitles[indexPath.row]
+            if indexPath.row == 0 {
+                cell.segmented = true
+            } else {
+                cell.placeholder = Constants().userPlaceholder[indexPath.row]
+            }
+        case 1:
+            cell.title = Constants().autoTitles[indexPath.row]
+            cell.placeholder = Constants().autoPlaceholder[indexPath.row]
+            if indexPath.row != 0 {
+                cell.disclosureIndicator = true
+            }
+        default:
+            break
+        }
         
         cell.configureCell()
         

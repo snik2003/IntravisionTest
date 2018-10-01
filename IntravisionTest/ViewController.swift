@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.backBarButtonItem?.title = ""
+        
         let formButton = UIBarButtonItem(title: "Форма заявки", style: .done, target: self, action: #selector(self.openFormController))
         self.navigationItem.rightBarButtonItem = formButton
         
@@ -24,7 +26,6 @@ class ViewController: UIViewController {
         
         self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    
 }
+
 
