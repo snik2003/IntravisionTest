@@ -12,9 +12,19 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let formButton = UIBarButtonItem(title: "Форма заявки", style: .done, target: self, action: #selector(self.openFormController))
+        self.navigationItem.rightBarButtonItem = formButton
+        
+        openFormController()
     }
-
-
+    
+    @objc func openFormController() {
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") as! TableViewController
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
 }
 
