@@ -10,25 +10,13 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
-    let sectionUserTitles: [String] = ["Обращение",
-                                    "Фамилия",
-                                    "Имя",
-                                    "Отчество",
-                                    "Телефон",
-                                    "Email"]
-    
-    let sectionAutoTitles: [String] = ["VIN",
-                                       "Год выпуска",
-                                       "Класс",
-                                       "Город",
-                                       "Дилер"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let readyButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(self.tapReadyButton(sender:)))
         self.navigationItem.rightBarButtonItem = readyButton
-        self.navigationItem.hidesBackButton = true
+        
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "testCell")
     }
 
     @objc func tapReadyButton(sender: UIBarButtonItem) {
@@ -60,27 +48,22 @@ class TableViewController: UITableViewController {
         
         switch section {
         case 0:
-            return sectionUserTitles.count
+            return Constants().userTitles.count
         case 1:
-            return sectionAutoTitles.count
+            return Constants().autoTitles.count
         default:
             return 0
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "test1", for: indexPath)
-
-        cell.textLabel?.textColor = .white
+        let cell = tableView.dequeueReusableCell(withIdentifier: "testCell", for: indexPath) as! TableViewCell
         
-        switch indexPath.section {
-        case 0:
-            cell.textLabel?.text = sectionUserTitles[indexPath.row]
-        case 1:
-            cell.textLabel?.text = sectionAutoTitles[indexPath.row]
-        default:
-            break
-        }
+
+        cell.delegate = self
+        cell.index = indexPath
+        
+        cell.configureCell()
         
         return cell
     }
