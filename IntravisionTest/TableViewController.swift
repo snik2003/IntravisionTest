@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class TableViewController: UITableViewController {
 
@@ -29,6 +30,8 @@ class TableViewController: UITableViewController {
             self.view.endEditing(true)
         }
         
+        Constants.shared.order.readPersonalData()
+        
         IntraAPI().getClasses() { (objects) -> (Void) in
             self.classes = objects
             IntraAPI().getCities() { (objects) -> (Void) in
@@ -44,7 +47,7 @@ class TableViewController: UITableViewController {
         self.view.endEditing(true)
         
         if Constants.shared.order.checkValidation(controller: self) {
-            self.showOrder()
+            IntraAPI().sendForm(controller: self)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -178,7 +181,7 @@ class TableViewController: UITableViewController {
         return cell
     }
     
-    func showErrorMessage(message: String) {
+    func showErrorMessage(message: String, pop: Bool = false) {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "OK", style: .cancel)

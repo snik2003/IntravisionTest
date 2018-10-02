@@ -82,7 +82,7 @@ class IntraAPI {
         OperationQueue().addOperation(request)
     }
     
-    func getRooms(cityID: Int, completion: @escaping ([ListObject]) -> Void) {
+    func getShowrooms(cityID: Int, completion: @escaping ([ListObject]) -> Void) {
         
         let url = "\(Constants.shared.apiURL)/ShowRooms/"
         
@@ -106,6 +106,49 @@ class IntraAPI {
             completion(objects)
         }
         OperationQueue().addOperation(request)
+    }
+    
+    func sendForm(controller: TableViewController) {
+        let url = "\(Constants.shared.apiURL)/WorkSheets/"
         
+        let headers = [
+            "Authorization": "\(Constants.shared.tokenType) \(Constants.shared.accessToken)",
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        ]
+        
+        let parameters: [String: Any] = [
+            "Gender": Constants.shared.order.gender,
+            "LastName": Constants.shared.order.lastName,
+            "FirstName": Constants.shared.order.firstName,
+            "MiddleName": Constants.shared.order.middleName,
+            "Email": Constants.shared.order.email,
+            "Phone": Constants.shared.order.phone,
+            "Vin": Constants.shared.order.vin,
+            "Year": Constants.shared.order.year,
+            "ClassId": Constants.shared.order.classID,
+            "City": Constants.shared.order.city,
+            "ShowRoomId": Constants.shared.order.showroomID
+        ]
+        
+        let request = GetServerDataOperation(url: url, parameters: parameters, method: .post, headers: headers, encoding: JSONEncoding.default)
+        request.completionBlock = {
+            guard let data = request.data else { print("data error"); return }
+            guard let json = try? JSON(data: data) else {
+                Constants.shared.order.savePersonalData()
+                Constants.shared.order = ThreePlusOrder(json: JSON.null)
+                OperationQueue.main.addOperation {
+                    controller.showErrorMessage(message: "Заявка на участие в сервисной программе успешно отправлена")
+                }
+                return
+            }
+            
+            //print(json)
+            OperationQueue.main.addOperation {
+                let message = json["Message"].stringValue
+                controller.showErrorMessage(message: message)
+            }
+        }
+        OperationQueue().addOperation(request)
     }
 }

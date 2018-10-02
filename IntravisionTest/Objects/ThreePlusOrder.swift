@@ -19,6 +19,7 @@ class ThreePlusOrder {
     var vin = ""
     var year = ""
     var classID = 0
+    var city = ""
     var showroomID = 0
 
     init(json: JSON) {
@@ -31,6 +32,7 @@ class ThreePlusOrder {
         self.vin = json["Vin"].stringValue
         self.year = json["Year"].stringValue
         self.classID = json["ClassId"].intValue
+        self.city = json["City"].stringValue
         self.showroomID = json["ShowRoomId"].intValue
     }
     
@@ -67,5 +69,43 @@ class ThreePlusOrder {
         }
         
         return false
+    }
+    
+    func savePersonalData() {
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(self.gender, forKey: "3+Order_Gender")
+        userDefaults.set(self.lastName, forKey: "3+Order_LastName")
+        userDefaults.set(self.firstName, forKey: "3+Order_FirstName")
+        userDefaults.set(self.middleName, forKey: "3+Order_MiddleName")
+        userDefaults.set(self.phone, forKey: "3+Order_Phone")
+        userDefaults.set(self.email, forKey: "3+Order_Email")
+    }
+    
+    func readPersonalData() {
+        
+        let userDefaults = UserDefaults.standard
+
+        self.gender = userDefaults.integer(forKey: "3+Order_Gender")
+        
+        if let text = userDefaults.string(forKey: "3+Order_LastName") {
+            self.lastName = text
+        }
+        
+        if let text = userDefaults.string(forKey: "3+Order_FirstName") {
+            self.firstName = text
+        }
+        
+        if let text = userDefaults.string(forKey: "3+Order_MiddleName") {
+            self.middleName = text
+        }
+        
+        if let text = userDefaults.string(forKey: "3+Order_Phone") {
+            self.phone = text
+        }
+        
+        if let text = userDefaults.string(forKey: "3+Order_Email") {
+            self.email = text
+        }
     }
 }

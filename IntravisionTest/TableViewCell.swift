@@ -261,6 +261,10 @@ extension TableViewCell: UITextFieldDelegate {
                 if let text = textField.text, let classID = objects.filter({ $0.name == text}).first?.id {
                     Constants.shared.order.classID = classID
                 }
+            case 3:
+                if let text = textField.text {
+                    Constants.shared.order.city = text
+                }
             case 4:
                 if let text = textField.text, let showroomID = objects.filter({ $0.name == text}).first?.id {
                     Constants.shared.order.showroomID = showroomID
@@ -325,7 +329,7 @@ extension TableViewCell: UIPickerViewDelegate {
             if let city = objects.filter({ $0.name == pickerData[row] }).first {
                 delegate.cityID = city.id
                 Constants.shared.order.showroomID = 0
-                IntraAPI().getRooms(cityID: city.id) { (objects) -> (Void) in
+                IntraAPI().getShowrooms(cityID: city.id) { (objects) -> (Void) in
                     self.delegate.showrooms = objects
                     OperationQueue.main.addOperation {
                         self.delegate.tableView.reloadRows(at: [IndexPath(row: 4, section: 1)], with: .automatic)

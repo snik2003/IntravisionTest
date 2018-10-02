@@ -37,4 +37,13 @@ class GetServerDataOperation: AsyncOperation {
         
         request = Alamofire.request(self.url, method: self.method, parameters: self.parameters, headers: headers)
     }
+    
+    init(url: String, parameters: Parameters? = nil, method: HTTPMethod, headers: [String: String], encoding: ParameterEncoding) {
+        
+        self.url = url
+        self.parameters = parameters
+        self.method = method
+        
+        request = Alamofire.request(self.url, method: self.method, parameters: self.parameters, encoding: encoding, headers: headers)
+    }
 }

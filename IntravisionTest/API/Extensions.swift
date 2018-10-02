@@ -28,11 +28,14 @@ extension String {
     }
     
     func isValidVin() -> Bool {
-        let vinRegex = "[a-zA-Z0-9]{9}[a-zA-Z0-9-]{2}[0-9]{6}"
-        let vinTest = NSPredicate(format: "SELF MATCHES %@", vinRegex)
+        //let vinRegex = "[a-zA-Z0-9]{9}[a-zA-Z0-9-]{2}[0-9]{6}"
+        //let vinTest = NSPredicate(format: "SELF MATCHES %@", vinRegex)
         
-        let result =  vinTest.evaluate(with: self)
-        return result
+        //let result =  vinTest.evaluate(with: self)
+        //return result
+        
+        if self.count != 17 { return false }
+        return true
     }
 }
 
