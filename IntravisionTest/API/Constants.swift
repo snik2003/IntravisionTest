@@ -1,5 +1,5 @@
 //
-//  ConstantsStruct.swift
+//  Constants.swift
 //  IntravisionTest
 //
 //  Created by Сергей Никитин on 01.10.2018.
@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public struct Constants {
+final class Constants {
+    static let shared = Constants()
     
     let userTitles: [String] = [
         "Обращение",
@@ -41,4 +43,11 @@ public struct Constants {
         "Выберите город",
         "Выберите дилера"]
 
+    let apiURL = "http://3plus-authless.test.intravision.ru/api"
+    let getTokenURL = "http://identity-server.test.intravision.ru/core/connect/token"
+    
+    var accessToken = ""
+    var tokenType = ""
+    
+    var order = ThreePlusOrder(json: JSON.null)
 }

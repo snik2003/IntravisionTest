@@ -10,23 +10,43 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+    var cityID: Int!
+    var cities: [ListObject] = []
+    var classes: [ListObject] = []
+    var showrooms: [ListObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let readyButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(self.tapReadyButton(sender:)))
         self.navigationItem.rightBarButtonItem = readyButton
         
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "testCell")
-    }
-
-    @objc func tapBackButton(sender: UIBarButtonItem) {
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "formCell")
         
-        self.navigationController?.popViewController(animated: true)
+        let tap = UITapGestureRecognizer()
+        self.view.addGestureRecognizer(tap)
+        tap.add {
+            self.view.endEditing(true)
+        }
+        
+        IntraAPI().getClasses() { (objects) -> (Void) in
+            self.classes = objects
+            IntraAPI().getCities() { (objects) -> (Void) in
+                self.cities = objects
+                OperationQueue.main.addOperation {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     @objc func tapReadyButton(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
         
-        self.navigationController?.popViewController(animated: true)
+        if Constants.shared.order.checkValidation(controller: self) {
+            self.showOrder()
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -53,9 +73,9 @@ class TableViewController: UITableViewController {
         
         switch section {
         case 0:
-            return Constants().userTitles.count
+            return Constants.shared.userTitles.count
         case 1:
-            return Constants().autoTitles.count
+            return Constants.shared.autoTitles.count
         default:
             return 0
         }
@@ -63,24 +83,91 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "testCell", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "formCell", for: indexPath) as! TableViewCell
         
         cell.delegate = self
         cell.index = indexPath
         
+        cell.segmented = false
+        cell.disclosureIndicator = false
+        cell.placeholder = nil
+        cell.textValue = ""
+        
         switch indexPath.section {
         case 0:
-            cell.title = Constants().userTitles[indexPath.row]
-            if indexPath.row == 0 {
+            cell.title = Constants.shared.userTitles[indexPath.row]
+            
+            switch indexPath.row {
+            case 0:
                 cell.segmented = true
-            } else {
-                cell.placeholder = Constants().userPlaceholder[indexPath.row]
+            case 1:
+                cell.placeholder = Constants.shared.userPlaceholder[indexPath.row]
+                cell.textValue = Constants.shared.order.lastName
+            case 2:
+                cell.placeholder = Constants.shared.userPlaceholder[indexPath.row]
+                cell.textValue = Constants.shared.order.firstName
+            case 3:
+                cell.placeholder = Constants.shared.userPlaceholder[indexPath.row]
+                cell.textValue = Constants.shared.order.middleName
+            case 4:
+                cell.placeholder = Constants.shared.userPlaceholder[indexPath.row]
+                cell.textValue = Constants.shared.order.phone
+            case 5:
+                cell.placeholder = Constants.shared.userPlaceholder[indexPath.row]
+                cell.textValue = Constants.shared.order.email
+            default:
+                break
             }
         case 1:
-            cell.title = Constants().autoTitles[indexPath.row]
-            cell.placeholder = Constants().autoPlaceholder[indexPath.row]
+            cell.title = Constants.shared.autoTitles[indexPath.row]
+            cell.placeholder = Constants.shared.autoPlaceholder[indexPath.row]
             if indexPath.row != 0 {
                 cell.disclosureIndicator = true
+            }
+            
+            switch indexPath.row {
+            case 0:
+                cell.textValue = Constants.shared.order.vin
+            case 1:
+                cell.textValue = Constants.shared.order.year
+                cell.pickerData.removeAll(keepingCapacity: false)
+                if let year = Calendar.current.dateComponents([.year], from: Date()).year {
+                    for value in year-15...year-2 {
+                        cell.pickerData.append("\(value)")
+                    }
+                }
+            case 2:
+                if let auto = classes.filter({ $0.id == Constants.shared.order.classID }).first?.name {
+                    cell.textValue = auto
+                }
+                
+                cell.objects = classes
+                cell.pickerData.removeAll(keepingCapacity: false)
+                for object in cell.objects {
+                    cell.pickerData.append(object.name)
+                }
+            case 3:
+                if let id = self.cityID, let city = cities.filter({ $0.id == id }).first?.name {
+                    cell.textValue = city
+                }
+                
+                cell.objects = cities
+                cell.pickerData.removeAll(keepingCapacity: false)
+                for object in cell.objects {
+                    cell.pickerData.append(object.name)
+                }
+            case 4:
+                if let showroom = showrooms.filter({ $0.id == Constants.shared.order.showroomID }).first?.name {
+                    cell.textValue = showroom
+                }
+                
+                cell.objects = showrooms
+                cell.pickerData.removeAll(keepingCapacity: false)
+                for object in cell.objects {
+                    cell.pickerData.append(object.name)
+                }
+            default:
+                break
             }
         default:
             break
@@ -89,5 +176,27 @@ class TableViewController: UITableViewController {
         cell.configureCell()
         
         return cell
+    }
+    
+    func showErrorMessage(message: String) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true)
+    }
+    
+    func showOrder() {
+        print("Обращение: \(Constants.shared.order.gender)")
+        print("Фамилия: \(Constants.shared.order.lastName)")
+        print("Имя: \(Constants.shared.order.firstName)")
+        print("Отчество: \(Constants.shared.order.middleName)")
+        print("Телефон: \(Constants.shared.order.phone)")
+        print("Email: \(Constants.shared.order.email)")
+        print("Vin: \(Constants.shared.order.vin)")
+        print("Год: \(Constants.shared.order.year)")
+        print("Класс: \(Constants.shared.order.classID)")
+        print("Дилер: \(Constants.shared.order.showroomID)")
     }
 }

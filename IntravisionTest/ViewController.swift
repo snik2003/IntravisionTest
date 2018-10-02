@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         let formButton = UIBarButtonItem(title: "Форма заявки", style: .done, target: self, action: #selector(self.openFormController))
         self.navigationItem.rightBarButtonItem = formButton
         
-        openFormController()
+        IntraAPI().getToken()
     }
     
     @objc func openFormController() {

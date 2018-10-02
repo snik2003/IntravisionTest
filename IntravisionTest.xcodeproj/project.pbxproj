@@ -14,10 +14,13 @@
 		1764EEF62162699600BA5986 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1764EEF42162699600BA5986 /* LaunchScreen.storyboard */; };
 		1764EEFE21626C9900BA5986 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1764EEFD21626C9900BA5986 /* TableViewController.swift */; };
 		1764EF00216279E700BA5986 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1764EEFF216279E700BA5986 /* TableViewCell.swift */; };
-		1764EF0221627BBF00BA5986 /* ConstantsStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1764EF0121627BBF00BA5986 /* ConstantsStruct.swift */; };
+		1764EF0221627BBF00BA5986 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1764EF0121627BBF00BA5986 /* Constants.swift */; };
 		1775202C2162AD3B007D141A /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775202B2162AD3B007D141A /* AsyncOperation.swift */; };
 		1775202E2162AD6A007D141A /* GetServerDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775202D2162AD6A007D141A /* GetServerDataOperation.swift */; };
 		17ACF9AF2162B4470047CF3D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ACF9AE2162B4470047CF3D /* Extensions.swift */; };
+		17D9614F216381170013FCCF /* ListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D9614E216381170013FCCF /* ListObject.swift */; };
+		17D96152216381C40013FCCF /* IntraAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D96151216381C40013FCCF /* IntraAPI.swift */; };
+		17D961542163986E0013FCCF /* ThreePlusOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D961532163986E0013FCCF /* ThreePlusOrder.swift */; };
 		EC0808EC6934904901DF154A /* Pods_IntravisionTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6292A6EFCF2D2C2A94B8897 /* Pods_IntravisionTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,10 +34,13 @@
 		1764EEF72162699600BA5986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1764EEFD21626C9900BA5986 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		1764EEFF216279E700BA5986 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		1764EF0121627BBF00BA5986 /* ConstantsStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsStruct.swift; sourceTree = "<group>"; };
+		1764EF0121627BBF00BA5986 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1775202B2162AD3B007D141A /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		1775202D2162AD6A007D141A /* GetServerDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServerDataOperation.swift; sourceTree = "<group>"; };
 		17ACF9AE2162B4470047CF3D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		17D9614E216381170013FCCF /* ListObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListObject.swift; sourceTree = "<group>"; };
+		17D96151216381C40013FCCF /* IntraAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntraAPI.swift; sourceTree = "<group>"; };
+		17D961532163986E0013FCCF /* ThreePlusOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreePlusOrder.swift; sourceTree = "<group>"; };
 		452B8F24553FFBA9054B290A /* Pods-IntravisionTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntravisionTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IntravisionTest/Pods-IntravisionTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9C79EC1966616EF670AAB57C /* Pods-IntravisionTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntravisionTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-IntravisionTest/Pods-IntravisionTest.release.xcconfig"; sourceTree = "<group>"; };
 		F6292A6EFCF2D2C2A94B8897 /* Pods_IntravisionTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntravisionTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,10 +79,10 @@
 		1764EEEA2162699400BA5986 /* IntravisionTest */ = {
 			isa = PBXGroup;
 			children = (
+				17D96150216381950013FCCF /* API */,
 				1775202A2162AD07007D141A /* WebService */,
+				17D9614D216380F00013FCCF /* Objects */,
 				1764EEEB2162699400BA5986 /* AppDelegate.swift */,
-				1764EF0121627BBF00BA5986 /* ConstantsStruct.swift */,
-				17ACF9AE2162B4470047CF3D /* Extensions.swift */,
 				1764EEFD21626C9900BA5986 /* TableViewController.swift */,
 				1764EEFF216279E700BA5986 /* TableViewCell.swift */,
 				1764EEED2162699400BA5986 /* ViewController.swift */,
@@ -95,6 +101,25 @@
 				1775202D2162AD6A007D141A /* GetServerDataOperation.swift */,
 			);
 			path = WebService;
+			sourceTree = "<group>";
+		};
+		17D9614D216380F00013FCCF /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				17D9614E216381170013FCCF /* ListObject.swift */,
+				17D961532163986E0013FCCF /* ThreePlusOrder.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		17D96150216381950013FCCF /* API */ = {
+			isa = PBXGroup;
+			children = (
+				17D96151216381C40013FCCF /* IntraAPI.swift */,
+				1764EF0121627BBF00BA5986 /* Constants.swift */,
+				17ACF9AE2162B4470047CF3D /* Extensions.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		1DE90200E6A86C6CB9EF9CA8 /* Frameworks */ = {
@@ -233,9 +258,12 @@
 				1764EEFE21626C9900BA5986 /* TableViewController.swift in Sources */,
 				17ACF9AF2162B4470047CF3D /* Extensions.swift in Sources */,
 				1764EEEC2162699400BA5986 /* AppDelegate.swift in Sources */,
+				17D96152216381C40013FCCF /* IntraAPI.swift in Sources */,
+				17D961542163986E0013FCCF /* ThreePlusOrder.swift in Sources */,
+				17D9614F216381170013FCCF /* ListObject.swift in Sources */,
 				1775202C2162AD3B007D141A /* AsyncOperation.swift in Sources */,
 				1775202E2162AD6A007D141A /* GetServerDataOperation.swift in Sources */,
-				1764EF0221627BBF00BA5986 /* ConstantsStruct.swift in Sources */,
+				1764EF0221627BBF00BA5986 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
